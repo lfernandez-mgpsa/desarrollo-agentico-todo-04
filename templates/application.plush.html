@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="<%= theme %>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tareas</title>
-    <link rel="stylesheet" href="/assets/app.css?v=3">
+    <link rel="stylesheet" href="/assets/app.css?v=4">
   </head>
   <body>
     <div class="app-layout">
@@ -21,12 +21,24 @@
             Tareas
           </a>
         </nav>
+        <form action="/theme" method="POST" class="theme-picker" data-theme-picker>
+          <input type="hidden" name="authenticity_token" value="<%= authenticity_token %>">
+          <label for="theme-select" class="theme-label">Fondo</label>
+          <div class="theme-row">
+            <select id="theme-select" name="theme" class="theme-select">
+              <%= for (opt) in themes { %>
+                <option value="<%= opt.Value %>"<%= if (opt.Value == theme) { %> selected<% } %>><%= opt.Label %></option>
+              <% } %>
+            </select>
+            <button type="submit" class="button theme-apply">Aplicar</button>
+          </div>
+        </form>
       </aside>
       <main class="container">
         <%= partial("flash.plush.html") %>
         <%= yield %>
       </main>
     </div>
-    <script src="/assets/app.js?v=2" defer></script>
+    <script src="/assets/app.js?v=3" defer></script>
   </body>
 </html>

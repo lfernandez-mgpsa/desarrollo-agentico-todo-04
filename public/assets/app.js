@@ -33,3 +33,13 @@ document.addEventListener("submit", function (event) {
 
   fetch(form.action);
 });
+
+// Selector de fondo: aplica el tema al instante y lo guarda en segundo plano.
+document.querySelectorAll("[data-theme-picker]").forEach(function (form) {
+  var apply = form.querySelector(".theme-apply");
+  if (apply) apply.hidden = true;
+  form.querySelector("select").addEventListener("change", function (event) {
+    document.documentElement.dataset.theme = event.target.value;
+    fetch(form.action, { method: "POST", body: new FormData(form), redirect: "manual" });
+  });
+});
