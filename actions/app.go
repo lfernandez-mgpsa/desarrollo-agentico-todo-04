@@ -48,12 +48,16 @@ func App() *buffalo.App {
 		//   c.Value("tx").(*pop.Connection)
 		app.Use(popmw.Transaction(models.DB))
 
+		// Deja en el contexto el color de fondo elegido.
+		app.Use(SetTheme)
+
 		app.GET("/", TasksIndex)
 		app.POST("/tasks", TasksCreate)
 		app.GET("/tasks/{task_id}/edit", TasksEdit)
 		app.PUT("/tasks/{task_id}", TasksUpdate)
 		app.PUT("/tasks/{task_id}/toggle", TasksToggle)
 		app.DELETE("/tasks/{task_id}", TasksDestroy)
+		app.POST("/theme", ThemeUpdate)
 		app.GET("/healthz", HealthCheck)
 
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
